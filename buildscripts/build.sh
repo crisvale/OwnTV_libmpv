@@ -17,7 +17,7 @@ loadarch () {
 	unset CC CXX CPATH LIBRARY_PATH C_INCLUDE_PATH CPLUS_INCLUDE_PATH
   unset CFLAGS CXXFLAGS CPPFLAGS LDFLAGS
 
-	local apilvl=26
+	local apilvl=25
 	# ndk_triple: what the toolchain actually is
 	# cc_triple: what Google pretends the toolchain is
 	if [ "$1" == "armv7l" ]; then
@@ -58,7 +58,7 @@ loadarch () {
 	# attached to that release (publish.yaml). Size: --exclude-libs keeps the static dependencies
 	# (harfbuzz, libplacebo, libass, freetype, libxml2, …) from being exported out of libmpv.so, which
 	# then only exports mpv's API; --gc-sections drops unreferenced code; packed relocations shrink
-	# .rela.dyn (API 23+, we build for 26).
+	# .rela.dyn (API 23+, we build for 25).
 	export LDFLAGS="-Wl,-O1,--icf=safe -Wl,-z,max-page-size=16384 -Wl,--build-id=sha1 -Wl,--exclude-libs,ALL -Wl,--gc-sections -Wl,--pack-dyn-relocs=android"
 	export AR=llvm-ar
 	export RANLIB=llvm-ranlib
