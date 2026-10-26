@@ -4,6 +4,7 @@
     python tools/inspect_aar.py libmpv/build/outputs/aar/libmpv-release.aar
 
 Checks:
+  * the AAR manifest declares the API level used by the native toolchain
   * exactly the ABIs OwnTV ships (armeabi-v7a, arm64-v8a, x86_64)
   * every 64-bit .so is 16 KB page-aligned (Google Play requirement; 32-bit ABIs are exempt)
   * no libvulkan dependency (OwnTV renders with GL or the direct MediaCodec path)
@@ -33,6 +34,7 @@ PAGE = 16384
 SIXTY_FOUR_BIT = {"arm64-v8a", "x86_64"}
 FFMPEG_JNI = "libowntvffmpeg.so"
 FFMPEG_JNI_NEEDS = {"libavcodec.so", "libswresample.so", "libavutil.so"}
+EXPECTED_MIN_SDK = 25
 
 # What a trimmed FFmpeg must still register (kind, generated list under _build*/, names). Audio: every
 # format OwnTV's TV channels and films carry, for mpv and ExoPlayer's FFmpeg decoder alike.
@@ -59,6 +61,11 @@ SYMBOL_OVERRIDES = {
 }
 
 errors = []
+
+
+def manifest_min_sdk(data):
+    match = re.search(rb"minSdkVersion\s*=\s*\"(\d+)\"", data)
+    return int(match.group(1)) if match else None
 
 
 def fail(msg):
@@ -118,6 +125,9 @@ def main(aar):
     wanted_filters = allowlist()
     out = tempfile.mkdtemp()
     with zipfile.ZipFile(aar) as z:
+        actual_min_sdk = manifest_min_sdk(z.read("AndroidManifest.xml"))
+        if actual_min_sdk != EXPECTED_MIN_SDK:
+            fail(f"manifest minSdk {actual_min_sdk} != {EXPECTED_MIN_SDK}")
         z.extractall(out)
     jni = os.path.join(out, "jni")
     found = sorted(os.listdir(jni))

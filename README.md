@@ -14,7 +14,7 @@
   <img alt="Platform" src="https://img.shields.io/badge/platform-Android%20library-3DDC84?logo=android&logoColor=white">
   <img alt="mpv" src="https://img.shields.io/badge/mpv-master%202a4eb8067-6D2A8C">
   <img alt="FFmpeg" src="https://img.shields.io/badge/FFmpeg-9.0.2-007808?logo=ffmpeg&logoColor=white">
-  <img alt="minSdk" src="https://img.shields.io/badge/minSdk-26-3DDC84">
+  <img alt="minSdk" src="https://img.shields.io/badge/minSdk-25-3DDC84">
   <img alt="License" src="https://img.shields.io/badge/license-GPLv3%20binaries%20%C2%B7%20MIT%20wrapper-blue">
   <img alt="Built with the help of AI" src="https://img.shields.io/badge/built%20with-the%20help%20of%20AI-8A2BE2">
 </p>
@@ -110,7 +110,7 @@ Every version is pinned in [`buildscripts/include/depinfo.sh`](buildscripts/incl
   from `/dev/urandom` (its default `/dev/random` can stall HTTPS for minutes on old boxes).
 - **ABIs** — `armeabi-v7a`, `arm64-v8a`, `x86_64` (no 32-bit x86, which neither app ships). 64-bit
   libraries are 16 KB page-aligned.
-- **minSdk** 26. **Java package** `dev.jdtech.mpv`, kept from upstream on purpose.
+- **minSdk** 25. **Java package** `dev.jdtech.mpv`, kept from upstream on purpose.
 
 ### Differences from upstream, in full
 

@@ -46,6 +46,9 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v6
 
+      - name: Run unit tests
+        run: python3 -m unittest discover -s tools/tests -p 'test_*.py'
+
       - name: Symlink SDK
         working-directory: ./buildscripts
         run: |
